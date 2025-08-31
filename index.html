@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LaukLoka</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{
+      --primary:#A83C2D;
+      --accent:#E8723E;
+      --bg:#F6F0E9;
+      --dark:#3b2f2b;
+      --card-bg: #fff;
+      --radius:12px;
+      --gap:18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      color:var(--dark);
+      line-height:1.45;
+    }
+
+    .container{max-width:1100px;margin:0 auto;padding:24px;}
+
+    /* HEADER */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px 0;
+      position: relative;
+      z-index: 1000; /* supaya menu dan burger muncul di atas */
+    }
+    .logo{
+      display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;color:var(--primary);
+    }
+    nav ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      gap:18px;
+      align-items:center;
+      transition:all 0.3s ease;
+    }
+    nav a{color:var(--dark);text-decoration:none;font-weight:600}
+    .btn-cta{
+      background:var(--accent);
+      color:white;
+      padding:10px 16px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:700;
+      box-shadow:0 6px 18px rgba(232,114,62,0.18);
+    }
+    .menu-toggle {
+      display:none;
+      cursor:pointer;
+      font-size:26px;
+      color:var(--primary);
+      z-index:1100;
+    }
+
+    /* HERO */
+    .hero{position:relative;margin-top:6px;border-radius:16px;overflow:hidden;}
+    .hero .bg{width:100%;min-height:60vh;object-fit:cover;display:block;filter:brightness(0.78);}
+    .hero .overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:40px;}
+    .hero h1{color:white;font-size:clamp(24px,5vw,44px);margin:0 0 14px;line-height:1.05;text-shadow:0 6px 30px rgba(0,0,0,0.5);font-weight:700;}
+    .hero p{color:#FFF8F5;margin:0 0 18px;font-weight:500;max-width:520px}
+    .hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+
+    /* SECTION */
+    section{margin:36px 0;padding:12px 0}
+    .about{display:flex;gap:var(--gap);align-items:center;padding:18px;}
+    .about .img{flex:0 0 320px}
+    .about img{width:100%;border-radius:12px;display:block;max-height:280px;object-fit:cover}
+    .about .text{flex:1}
+    .about h2{color:var(--primary);margin:0 0 10px;font-size:28px}
+    .about p{margin:0;color:#4b3f3a}
+
+    /* MENU GRID */
+    .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:12px;}
+    .card{background:var(--card-bg);border-radius:var(--radius);padding:12px;box-shadow:0 6px 18px rgba(30,20,15,0.06);display:flex;flex-direction:column;gap:10px;align-items:stretch;}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:10px}
+    .card h3{margin:0;color:var(--primary);font-size:18px}
+    .price{color:#6b534d;font-weight:700;margin-top:auto}
+
+    /* PROMO */
+    .promo{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:16px;border-radius:12px;background:linear-gradient(90deg,#fff7f4,#fff);box-shadow:0 6px 20px rgba(168,60,45,0.06);}
+    .promo .left{font-weight:700;color:var(--dark)}
+    .promo .right a{background:var(--primary);color:white;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700}
+
+    /* FOOTER */
+    footer{padding:18px 0;margin-top:36px;border-top:1px solid rgba(0,0,0,0.04)}
+    .footer-flex{display:flex;justify-content:space-between;gap:12px;align-items:center}
+
+    nav a.active {color:var(--primary);font-weight:700;}
+
+    .page-section{display:none;}
+    .page-section.active{display:block;}
+
+    /* TESTIMONI */
+    .testimonial-grid{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:30px;}
+    .testimonial-card{background:white;padding:12px;border-radius:10px;max-width:320px;box-shadow:0 8px 20px rgba(0,0,0,0.06);}
+    .testimonial-card p{margin:0 0 8px;}
+    .testimonial-card .author{font-weight:700;color:var(--primary);}
+
+    /* RESPONSIVE */
+    @media (max-width:980px){.hero .bg{height:340px}}
+    @media (max-width:640px){
+      .container{padding:14px}
+      nav ul{
+        display:none;
+        flex-direction:column;
+        background:white;
+        position:absolute;
+        top:70px;
+        right:14px;
+        padding:14px;
+        border-radius:10px;
+        box-shadow:0 6px 16px rgba(0,0,0,0.1);
+        width:200px;
+        text-align:left;
+      }
+      nav ul.show{display:flex}
+      .menu-toggle{display:block}
+      .about{flex-direction:column}
+      .about .img{width:100%}
+      .hero .overlay{padding:18px}
+    }
+
+    /* RESPONSIVE KHUSUS KONTAK */
+    @media (max-width:640px){
+      #kontak section{
+        padding: 10px;
+      }
+      #kontak h2{
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      #kontak h3{
+        font-size: 18px;
+      }
+      #kontak p{
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      #kontak div[style*="display:flex"]{
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 10px !important;
+      }
+      #kontak div[style*="display:flex"] a{
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <img src="https://media.discordapp.net/attachments/979604587055046707/1411706224071933962/LOGO_LAUKLOKA.png?ex=68b5a160&is=68b44fe0&hm=3566ed7ce1020944b1d6976437618efae9f4520720d4f91476e00cae6fe87ade&=&format=webp&quality=lossless&width=579&height=579" alt="Logo LaukLoka" style="width:55px;height:55px;border-radius:20px;object-fit:cover">
+        LaukLoka
+      </div>
+      <nav>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul>
+          <li><a href="#" class="active" onclick="showPage('beranda')">Beranda</a></li>
+          <li><a href="#" onclick="showPage('tentang')">Tentang kami</a></li>
+          <li><a href="#" onclick="showPage('menu')">Menu</a></li>
+          <li><a href="#" onclick="showPage('kontak')">Kontak</a></li>
+          <li><a class="btn-cta" href="#" onclick="showPage('pesan')">Pesan</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- BERANDA PAGE -->
+    <div id="beranda" class="page-section active">
+      <!-- HERO -->
+      <section class="hero" aria-label="Hero">
+        <img class="bg" src="https://media.discordapp.net/attachments/979604587055046707/1411706258473353266/sate_padang.jpg?ex=68b5a168&is=68b44fe8&hm=aa1f5b54a0b6ebf55d21c447c834dbb95a17b8e49bcfd03e8dd8ee1c74195068&=&format=webp&width=946&height=475" alt="Background">
+        <div class="overlay container" style="max-width:1000px;">
+          <h1>Rasa Asli LaukLoka, <br> Kini di Meja Anda</h1>
+          <p>Nikmati kelezatan makanan tradisional Indonesia yang autentik dengan cita rasa yang menggugah selera, langsung di rumah Anda.</p>
+          <div class="actions">
+            <a class="btn-cta" href="#" onclick="showPage('menu')" style="background:rgba(255,255,255,0.12);color:white;border:2px solid rgba(255,255,255,0.14);box-shadow:none">Lihat Menu</a>
+            <a class="btn-cta" href="#" onclick="showPage('pesan')">Pesan Sekarang</a>
+          </div>
+        </div>
+      </section>
+      </div>
+
+    <!-- TENTANG -->
+    <div id="tentang" class="page-section">
+      <section class="about" aria-labelledby="about-title" style="margin-top:40px">
+        <div class="img">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4f77c63f-572f-4d52-9a61-194da5ac9c36.png" alt="Tim chef dan staf LaukLoka yang profesional dengan seragam putih bersih di dapur modern">
+        </div>
+        <div class="text">
+          <h2 id="about-title" style="font-size:32px">Tentang LaukLoka</h2>
+          <p>LaukLoka berdiri pada tahun 2025 dengan misi untuk melestarikan dan mempromosikan kuliner tradisional Indonesia. Kami menggunakan bahan-bahan pilihan dan resep turun-temurun yang telah dijaga keasliannya.</p>
+          <p>Setiap hidangan, kami buat dengan sepenuh hati, menghadirkan cita rasa yang hangat dan dekat di hati.</p>
+          <p style="margin-top:20px;font-weight:600;color:#5b463f">• Bahan-bahan segar dan berkualitas</p>
+          <p style="font-weight:600;color:#5b463f">• Proses memasak yang higienis</p>
+          <p style="font-weight:600;color:#5b463f">• Pengiriman cepat dan aman</p>
+        </div>
+      </section>
+
+      <section style="margin-top:50px;text-align:center">
+        <h2 style="color:var(--primary);margin-bottom:20px">Visi & Misi</h2>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+          <div style="background:white;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
+            <h3 style="color:var(--primary)">Visi</h3>
+            <p>Menjadi platform kuliner terdepan yang menghadirkan keaslian rasa tradisional Indonesia ke seluruh penjuru negeri.</p>
+          </div>
+          <div style="background:white;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
+            <h3 style="color:var(--primary)">Misi</h3>
+            <p>Melestarikan warisan kuliner nusantara melalui inovasi dan pelayanan terbaik bagi pelanggan.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+       <!-- PAGE MENU -->
+    <div id="menu" class="page-section">
+      <section aria-labelledby="menu-title" style="margin-top:40px">
+        <h2 id="menu-title" style="text-align:center;color:var(--primary);margin:6px 0 12px;font-size:32px">Menu Lengkap LaukLoka</h2>
+        <p style="text-align:center;max-width:600px;margin:0 auto 30px">Nikmati berbagai pilihan lauk tradisional Indonesia dengan cita rasa autentik</p>
+
+        <div class="menu-grid">
+          <div class="card">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4f49403f-f5dc-4567-b389-10dd0464eb33.png" alt="Rendang daging sapi khas Padang dengan kuah kental dan rempah-rempah pilihan">
+            <h3>Rendang</h3>
+            <div class="price">Rp 43.000</div>
+          </div>
+
+          <div class="card">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2e493339-6eba-4fef-8939-ff5dda74ce2d.png" alt="Ayam Betutu khas Bali dimasak dengan bumbu base genep yang khas">
+            <h3>Ayam Betutu</h3>
+            <div class="price">Rp 40.000</div>
+          </div>
+
+          <div class="card">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a2badcfd-fb57-40d7-9cd8-4e48b6a72f77.png" alt="Ikan segar bakar dengan bumbu special dan sambal terasi">
+            <h3>Ikan Bakar</h3>
+            <div class="price">Rp 50.000</div>
+          </div>
+
+          <div class="card">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8ae06674-8dd2-4c17-956c-c62c73c54b35.png" alt="Sate Padang dengan kuah kental berwarna kuning dan rasa gurih">
+            <h3>Sate Padang</h3>
+            <div class="price">Rp 56.000</div>
+          </div>
+
+          <div class="card">
+            <img src="https://thumb.viva.id/intipseleb/663x372/2022/06/21/62b16bf1c4a05-resep-tahu-bacem.jpg" alt="Tahu Bacem manis dan gurih dengan tekstur lembut">
+            <h3>Tahu Bacem</h3>
+            <div class="price">Rp 35.000</div>
+          </div>
+
+          <div class="card">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/830c032b-13e5-4963-b4ca-5fc90954eb4e.png" alt="Pepes Ikan dengan daun pisang dan bumbu aromatik">
+            <h3>Pepes Ikan</h3>
+            <div class="price">Rp 30.000</div>
+          </div>
+        </div>
+
+        <!-- <div style="text-align:center;margin-top:30px">
+          <a class="btn-cta" href="#semua-menu">Lihat Semua Menu LaukLoka</a>
+        </div> -->
+
+        <!-- TESTIMONI -->
+        <section aria-label="Testimoni" style="margin-top:50px;">
+          <h2 style="text-align:center;margin-bottom:20px;color:var(--primary);font-size:32px">Testimoni Pelanggan</h2>
+          <div class="testimonial-grid">
+            <div class="testimonial-card">
+              <p>"Rendangnya wuenakkkkk. Pengirimannya cepet bet, mantap pokoknya!"</p>
+              <div class="author">— Agal, Solo</div>
+            </div>
+
+            <div class="testimonial-card">
+              <p>"Lauknya lengkap banget, bisa nih order untuk acara kantor😆 recommended deh pokoknya!"</p>
+              <div class="author">— Dimas, Yogyakarta</div>
+            </div>
+
+            <div class="testimonial-card">
+              <p>"Ayam Betutunya wuenak pollllll, pedesnya nendang lagi, pasti order lagi sih ini!"</p>
+              <div class="author">— Sari, Bandung</div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </div>
+ 
+    <!-- PAGE KONTAK -->
+    <div id="kontak" class="page-section">
+      <section style="margin-top:40px">
+        <h2 style="text-align:center;color:var(--primary);font-size:32px;margin-bottom:30px">Hubungi LaukLoka</h2>
+        <div style="max-width:600px;margin:0 auto;text-align:center">
+            <h3 style="color:var(--primary)">Informasi Kontak</h3>
+            <p><strong>Alamat:</strong><br>Jl. Magelang No.12, Yogyakarta</p>
+            <p><strong>Telepon:</strong><br>+62 000-000-000</p>
+            <p><strong>Email:</strong><br>project.laukloka@gmail.com</p>
+            <p><strong>Jam Operasional:</strong><br>08.00 — 20.00 (Setiap Hari)</p>
+  
+            <div style="margin-top:30px">
+              <h3 style="color:var(--primary)">Follow Kami</h3>
+              <div style="display:flex;gap:15px;justify-content:center;margin-top:10px">
+                <a href="#" style="padding:10px 15px;background:#bf2fba;color:white;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:8px">
+                  <i class="fab fa-instagram"></i> Instagram </a>
+                <a href="#" style="padding:10px 15px;background:#25D366;color:white;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:8px">
+                  <i class="fab fa-whatsapp"></i> WhatsApp </a>
+                <a href="#" style="padding:10px 15px;background:#000;color:white;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:8px">
+                  <i class="fab fa-tiktok"></i> TikTok </a>
+  </div>
+</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE PESAN -->
+    <div id="pesan" class="page-section">
+    <style>
+.form-container {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h2 {
+    color: #a84415;
+    text-align: center;
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #4a4a4a;
+}
+input[type="text"],
+input[type="tel"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    box-sizing: border-box;
+    resize: vertical;
+}
+textarea {
+    min-height: 80px;
+}
+button {
+    background-color: #e7783f;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px;
+    margin-top: 25px;
+    width: 100%;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #d16934;
+}
+    </style>
+    <div class="form-container">
+        <h2>Form Pemesanan LaukLoka</h2>
+        <form>
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap Anda" required>
+
+            <label for="nomorHp">Nomor HP</label>
+            <input type="tel" id="nomorHp" name="nomorHp" placeholder="08xxxxxxxxxx" pattern="[0-9]{10,13}" required>
+
+            <label for="alamat">Alamat Lengkap</label>
+            <textarea id="alamat" name="alamat" placeholder="Ketik alamat lengkap Anda" required></textarea>
+
+            <label for="jasaPengiriman">Jasa Pengiriman</label>
+            <select id="jasaPengiriman" name="jasaPengiriman" required>
+                <option value="" disabled selected>-- Pilih Jasa Pengiriman --</option>
+                <option value="jne">JNE</option>
+                <option value="pos">POS Indonesia</option>
+                <option value="grab">Grab Express</option>
+                <option value="gosend">GoSend</option>
+            </select>
+
+            <label for="metodePembayaran">Metode Pembayaran</label>
+            <select id="metodePembayaran" name="metodePembayaran" required>
+                <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
+                <option value="transfer">Transfer Bank (BCA, BRI, Mandiri)</option>
+                <option value="qris">QRIS</option>
+                <option value="cod">COD (Bayar di Tempat)</option>
+            </select>
+
+            <div>
+              <label style="display:block;margin-bottom:5px;font-weight:600">Pilih Menu</label>
+              <select style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px">
+                <option value="43000">Rendang - Rp 43.000</option>
+                <option value="40000">Ayam Betutu - Rp 40.000</option>
+                <option value="50000">Ikan Bakar - Rp 50.000</option>
+                <option value="56000">Sate Padang - Rp 56.000</option>
+                <option value="35000">Tahu Bacem - Rp 35.000</option>
+                <option value="30000">Pepes Ikan - Rp 30.000</option>
+              </select>
+            </div>
+            
+            <div>
+              <label style="display:block;margin-bottom:5px;font-weight:600">Jumlah</label>
+              <input type="number" min="1" value="1" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px">
+            </div>
+
+            <!-- <label for="hargaTotal">Harga Total Pesanan (Rp)</label>
+            <input type="text" id="hargaTotal" name="hargaTotal" value="0" readonly style="background-color: #eee;"> -->
+
+            <button type="submit">Konfirmasi Pemesanan</button>
+        </form>
+    </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="margin-top:40px;padding:20px 0;border-top:1px solid rgba(0,0,0,0.08);color:#6b534d">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      ©️ 2025 LaukLoka
+    </div>
+    <div style="text-align:right">
+      <div>Follow LaukLoka:</div>
+      <div style="margin-top:8px">
+        <a href="#" style="margin-right:12px;text-decoration:none;color:var(--primary);display:inline-flex;align-items:center;gap:6px">
+          <i class="fab fa-instagram"></i> Instagram </a>
+        <a href="#" style="margin-right:12px;text-decoration:none;color:var(--primary);display:inline-flex;align-items:center;gap:6px">
+          <i class="fab fa-whatsapp"></i> WhatsApp </a>
+        <a href="#" style="text-decoration:none;color:var(--primary);display:inline-flex;align-items:center;gap:6px">
+          <i class="fab fa-tiktok"></i> TikTok </a>
+      </div>
+    </div>
+  </div>
+</footer>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(p=>p.classList.remove('active'));
+      const activePage=document.getElementById(pageId);
+      if(activePage){activePage.classList.add('active');}
+      document.querySelectorAll('nav a').forEach(link=>link.classList.remove('active'));
+      const activeLink=Array.from(document.querySelectorAll('nav a')).find(l=>l.textContent.toLowerCase().includes(pageId.toLowerCase())||(pageId==='beranda'&&l.textContent==='Beranda'));
+      if(activeLink){activeLink.classList.add('active');}
+      window.scrollTo(0,0);
+    }
+    function toggleMenu(){
+      document.querySelector('nav ul').classList.toggle('show');
+    }
+    
+    document.querySelectorAll('nav ul li a').forEach(link=>{
+      link.addEventListener('click',()=>{document.querySelector('nav ul').classList.remove('show');});
+    });
+    showPage('beranda');
+  </script>
+</body>
+</html>
